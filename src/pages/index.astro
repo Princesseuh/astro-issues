@@ -1,0 +1,80 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { statsFromLast30Days } from "issues:stats";
+
+console.log(statsFromLast30Days);
+---
+
+<Layout>
+  <div class="bg-white rounded-lg">
+    <canvas id="myChart"></canvas>
+  </div>
+</Layout>
+
+<script>
+  import Chart, { type ChartItem } from "chart.js/auto";
+  import { allRepos, statsFromLast30Days } from "issues:stats";
+  const ctx = document.getElementById("myChart");
+
+  function getStatsForRepo(repo: string) {
+    return Object.values(statsFromLast30Days).map((stats) => {
+      return stats.data?.[repo]?.issueCount ?? 0;
+    });
+  }
+
+  function getAverageIssueCountForRepo(repo: string) {
+    const data = getStatsForRepo(repo);
+    const sum = data.reduce((a, b) => a + b, 0);
+    const avg = sum / data.length || 0;
+
+    return avg;
+  }
+
+  new Chart(ctx as ChartItem, {
+    type: "line",
+    data: {
+      labels: [...Object.keys(statsFromLast30Days)],
+      datasets: [
+        ...allRepos.map((repo) => ({
+          label: repo,
+          data: getStatsForRepo(repo),
+          borderWidth: 1,
+          fill: true,
+          hidden: getAverageIssueCountForRepo(repo) < 10,
+        })),
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Total issues count on all Astro repos",
+        },
+        tooltip: {
+          mode: "index",
+        },
+      },
+      interaction: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Last 30 days",
+          },
+        },
+        y: {
+          stacked: true,
+          title: {
+            display: true,
+            text: "Issue count",
+          },
+        },
+      },
+    },
+  });
+</script>

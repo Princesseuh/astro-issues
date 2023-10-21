@@ -1,0 +1,36 @@
+on:
+  schedule:
+    - cron: "0 1 * * *"
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          # Needs access to push to main
+          token: ${{ secrets.STATS_GITHUB_TOKEN }}
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run stats collection
+        env:
+          STATS_COLLECT_TOKEN: ${{ secrets.STATS_COLLECT_TOKEN }}
+        run: pnpm run collect-stats
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[ci] collect-stats"
+          branch: ${{ github.head_ref }}
