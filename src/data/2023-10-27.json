@@ -1,0 +1,203 @@
+{
+  "date": "2023-10-27T01:38:55.820Z",
+  "data": {
+    "astro": {
+      "issuePerLabel": {
+        "- P2: nice to have": 15,
+        "feat: view transitions": 7,
+        "- P3: minor bug": 52,
+        "needs triage": 2,
+        "needs repro": 1,
+        "feat: redirects": 3,
+        "feat: styling": 6,
+        "pkg: vue": 2,
+        "- P4: important": 19,
+        "pkg: create-astro": 1,
+        "help wanted": 4,
+        "feat: assets": 10,
+        "pkg: tailwind": 1,
+        "feat: content collections": 5,
+        "ecosystem: external": 2,
+        "pkg: mdx": 3,
+        "feat: typescript": 1,
+        "pkg: react": 3,
+        "pkg: preact": 2,
+        "pkg: solid": 6,
+        "pkg: node": 1,
+        "- P2: has workaround": 4,
+        "feat: error pages": 3,
+        "ecosystem: upstream": 3,
+        "feat: hmr": 2,
+        "feat: dev": 3,
+        "feat: add": 2,
+        "pkg: markdoc": 3,
+        "feat: errors": 2,
+        "pkg: integration": 2,
+        "needs discussion": 2,
+        "pkg: lit": 3,
+        "pkg: cloudflare": 3,
+        "needs response": 1,
+        "feat: ssr": 8,
+        "pkg: vercel": 3,
+        "feat: middleware": 1,
+        "feat: markdown": 1,
+        "pkg: rss": 1
+      },
+      "issueCount": 102
+    },
+    "docs": {
+      "issuePerLabel": {
+        "improve documentation": 20,
+        "add new content": 4,
+        "help wanted": 14,
+        "good first issue": 5,
+        "bug": 3,
+        "site improvement": 1,
+        "recipe": 2
+      },
+      "issueCount": 40
+    },
+    "prettier-plugin-astro": {
+      "issuePerLabel": {
+        "bug": 6,
+        "upstream": 4,
+        "feature": 2
+      },
+      "issueCount": 15
+    },
+    "compiler": {
+      "issuePerLabel": {
+        "tsx": 3,
+        "p2-to-be-discussed": 1,
+        "p4-important": 10,
+        "p3-minor-bug": 13,
+        "p2-nice-to-have": 3,
+        "needs response": 1,
+        "p5-urgent": 1,
+        "ast": 2,
+        "blocking": 2,
+        "p2-has-workaround": 2,
+        "s2-medium": 1,
+        "s1-small": 1,
+        "good first issue": 2
+      },
+      "issueCount": 55
+    },
+    "astro-repl": {
+      "issuePerLabel": {},
+      "issueCount": 4
+    },
+    "language-tools": {
+      "issuePerLabel": {
+        "bug": 22,
+        "upstream": 6,
+        "feature": 7,
+        "ts-plugin": 1,
+        "syntax": 5,
+        "yarn-pnp": 2,
+        "svelte": 3,
+        "vue": 2,
+        "p3-minor-bug": 3,
+        "check": 1,
+        "tsx-output": 3,
+        "2.0": 2,
+        "p2-has-workaround": 1,
+        "p2-nice-to-have": 3
+      },
+      "issueCount": 34
+    },
+    "astro.new": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "roadmap": {
+      "issuePerLabel": {},
+      "issueCount": 5
+    },
+    "withastro.github.io": {
+      "issuePerLabel": {},
+      "issueCount": 1
+    },
+    "astro.build": {
+      "issuePerLabel": {},
+      "issueCount": 5
+    },
+    "astro-playground": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    ".github": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "action": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "github-pages": {
+      "issuePerLabel": {},
+      "issueCount": 1
+    },
+    "cli-kit": {
+      "issuePerLabel": {},
+      "issueCount": 2
+    },
+    "site-kit": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "blog-tutorial-demo": {
+      "issuePerLabel": {},
+      "issueCount": 1
+    },
+    "houston.astro.build": {
+      "issuePerLabel": {},
+      "issueCount": 2
+    },
+    "houston-vscode": {
+      "issuePerLabel": {
+        "bug": 6
+      },
+      "issueCount": 10
+    },
+    "houston-bot": {
+      "issuePerLabel": {
+        "feature": 2,
+        "RFC": 3,
+        "RFC_Implementation": 1,
+        "RFC_Testing": 1,
+        "improvement": 1
+      },
+      "issueCount": 4
+    },
+    "starlight": {
+      "issuePerLabel": {
+        "enhancement": 1,
+        "🐛 bug": 2
+      },
+      "issueCount": 11
+    },
+    "automation": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "view-transitions-demo": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "netlify-adapter": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "wormhole": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "adapters": {
+      "issuePerLabel": {
+        "upstream": 1
+      },
+      "issueCount": 6
+    }
+  }
+}
