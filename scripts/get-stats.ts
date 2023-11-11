@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit/core";
-import fs from "node:fs";
 import "dotenv/config";
+import fs from "node:fs";
 
 // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
 const octokit = new Octokit({
@@ -9,7 +9,7 @@ const octokit = new Octokit({
 
 const repos = await octokit.request("GET /orgs/{org}/repos", {
   org: "withastro",
-  type: "sources",
+	type: "sources",
   per_page: 100, // Maybe one day we'll have more than 100 repos
 });
 
@@ -19,6 +19,8 @@ const data: Record<
 > = {};
 
 for (const repo of repos.data) {
+	if (repo.archived) continue;
+
   const allIssues = await getAllIssues(repo.name);
 
   data[repo.name] = {
@@ -46,7 +48,7 @@ async function getAllIssues(repo: string, page = 1) {
       repo,
       page,
       per_page,
-      state: "open",
+			state: "open",
     },
   );
 

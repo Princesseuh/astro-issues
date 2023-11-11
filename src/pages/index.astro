@@ -1,80 +1,214 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { statsFromLast30Days } from "issues:stats";
+import { getAverageIssueCountForRepo, getStatsForRepo } from "../scripts/data";
+import { allRepos, statsFromLast30Days } from "issues:stats";
 
-console.log(statsFromLast30Days);
+const biggestDropFromPeak = allRepos
+  .map((repo) => {
+    const stats = getStatsForRepo(repo);
+    const highestPeak = Math.max(...stats.map((stat) => stat));
+    const currentIssues = stats[stats.length - 1];
+
+    return {
+      repo,
+      currentIssues: currentIssues,
+      peakDate: Object.keys(statsFromLast30Days)[stats.indexOf(highestPeak)],
+      peak: highestPeak,
+      drop: highestPeak - currentIssues,
+    };
+  })
+  .sort((a, b) => b.drop - a.drop);
+
+function getStandardDeviation(array) {
+  const n = array.length;
+  const mean = array.reduce((a, b) => a + b) / n;
+  return Math.sqrt(
+    array.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n,
+  );
+}
+
+const standardDeviationPerRepo = allRepos
+  .filter((repo) => getAverageIssueCountForRepo(repo) > 7)
+  .map((repo) => {
+    const stats = getStatsForRepo(repo);
+    const standardDeviation = getStandardDeviation(stats);
+
+    return {
+      repo,
+      standardDeviation,
+    };
+  })
+  .sort((a, b) => b.standardDeviation - a.standardDeviation);
+
+console.log(standardDeviationPerRepo);
+
+const repoWithLeastSD =
+  standardDeviationPerRepo[standardDeviationPerRepo.length - 1];
+
+const funStats = [
+  {
+    prompt: `Repo with biggest drop in issues <abbr
+      class="text-gray-800 heading-5 ml-[-5px] align-top"
+      title="From their highest peak in the last 30 days to today"
+      >(?)</abbr
+    >`,
+    repo: biggestDropFromPeak[0].repo,
+    comment: `Went from ${biggestDropFromPeak[0].peak} issues on the ${biggestDropFromPeak[0].peakDate} to ${biggestDropFromPeak[0].currentIssues} issues today.`,
+  },
+  {
+    prompt: `Repo with the least change in issues count`,
+    repo: repoWithLeastSD.repo,
+    comment: `Average issue count of ${Math.floor(
+      getAverageIssueCountForRepo(repoWithLeastSD.repo),
+    )} (σ = ${repoWithLeastSD.standardDeviation.toFixed(
+      2,
+    )}) in the last 30 days.`,
+  },
+];
 ---
 
-<Layout>
-  <div class="bg-white rounded-lg">
-    <canvas id="myChart"></canvas>
+<Layout wide>
+  <h2 class="heading-3 text-white mb-6">Last 30 days</h2>
+  <div class="bg-white rounded-lg min-h-[50vh] sm:min-h-[28rem] px-4 py-2">
+    <canvas id="all-issues-stacked-graph"></canvas>
   </div>
-</Layout>
 
-<script>
-  import Chart, { type ChartItem } from "chart.js/auto";
-  import { allRepos, statsFromLast30Days } from "issues:stats";
-  const ctx = document.getElementById("myChart");
+  <h2 class="heading-3 text-white mt-12">
+    Today <abbr
+      class="text-gray-300 heading-5 ml-[-5px] align-top"
+      title="Only repositories that have on average more than 7 issues in the last 14 days are included in the charts below."
+      >(?)</abbr
+    >
+  </h2>
+  <section class="flex flex-col sm:flex-row gap-8">
+    <div class="flex-1">
+      <h2 class="heading-4 text-white my-6">Issues per repo</h2>
+      <div class="bg-white rounded-lg p-4">
+        <canvas id="issues-repos-pie-chart"></canvas>
+      </div>
+    </div>
+    <div class="flex-grow">
+      <h2 class="heading-4 text-white my-6">Issues per label</h2>
+      <div class="bg-white rounded-lg p-4">
+        <h3 class="text-3xl text-center text-black">WIP</h3>
+      </div>
+    </div>
+  </section>
 
-  function getStatsForRepo(repo: string) {
-    return Object.values(statsFromLast30Days).map((stats) => {
-      return stats.data?.[repo]?.issueCount ?? 0;
+  <h2 class="heading-3 text-white mt-12 mb-6">Fun stats</h2>
+  <div class="w-full flex gap-8">
+    {
+      funStats.map((stat) => (
+        <div class="bg-white rounded-lg p-4">
+          <h3 class="heading-4 text-black" set:html={stat.prompt} />
+          <p class="text-gray-900 font-bold text-2xl my-2">{stat.repo}</p>
+          <p class="text-gray-500">{stat.comment}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <script>
+    import Chart from "chart.js/auto";
+    import {
+      allReposData,
+      sortLegend,
+      sortTooltips,
+      todayData,
+    } from "../scripts/data";
+
+    const allIssuesCTX = document.querySelector<HTMLCanvasElement>(
+      "#all-issues-stacked-graph",
+    );
+
+    const issuesPerRepoPieChartCTX = document.querySelector<HTMLCanvasElement>(
+      "#issues-repos-pie-chart",
+    );
+
+    if (!allIssuesCTX || !issuesPerRepoPieChartCTX) {
+      throw new Error("Could not find canvas element");
+    }
+
+    new Chart(allIssuesCTX, {
+      type: "line",
+      data: allReposData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: "Total issues count on all Astro repos",
+          },
+          legend: {
+            position: "top",
+            labels: {
+              sort: sortLegend,
+            },
+          },
+          tooltip: {
+            mode: "index",
+            itemSort: sortTooltips,
+          },
+        },
+        interaction: {
+          mode: "nearest",
+          axis: "x",
+          intersect: false,
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Last 30 days",
+            },
+          },
+          y: {
+            beginAtZero: true,
+            stacked: true,
+            title: {
+              display: true,
+              text: "Issue count",
+            },
+          },
+        },
+      },
     });
-  }
 
-  function getAverageIssueCountForRepo(repo: string) {
-    const data = getStatsForRepo(repo);
-    const sum = data.reduce((a, b) => a + b, 0);
-    const avg = sum / data.length || 0;
-
-    return avg;
-  }
-
-  new Chart(ctx as ChartItem, {
-    type: "line",
-    data: {
-      labels: [...Object.keys(statsFromLast30Days)],
-      datasets: [
-        ...allRepos.map((repo) => ({
-          label: repo,
-          data: getStatsForRepo(repo),
-          borderWidth: 1,
-          fill: true,
-          hidden: getAverageIssueCountForRepo(repo) < 10,
-        })),
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: "Total issues count on all Astro repos",
-        },
-        tooltip: {
-          mode: "index",
-        },
-      },
-      interaction: {
-        mode: "nearest",
-        axis: "x",
-        intersect: false,
-      },
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: "Last 30 days",
+    new Chart(issuesPerRepoPieChartCTX, {
+      type: "pie",
+      data: todayData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: {
+              sort: sortLegend,
+            },
           },
-        },
-        y: {
-          stacked: true,
-          title: {
-            display: true,
-            text: "Issue count",
+          tooltip: {
+            mode: "index",
+            itemSort: sortTooltips,
+            callbacks: {
+              label: function (context) {
+                var label = context.label,
+                  currentValue = context.raw as number,
+                  total = (context.chart as any)._metasets[context.datasetIndex]
+                    .total;
+
+                context.chart.data.datasets;
+
+                var percentage = parseFloat(
+                  ((currentValue / total) * 100).toFixed(1),
+                );
+
+                return label + ": " + currentValue + " (" + percentage + "%)";
+              },
+            },
           },
         },
       },
-    },
-  });
-</script>
+    });
+  </script>
+</Layout>
