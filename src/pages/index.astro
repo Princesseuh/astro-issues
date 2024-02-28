@@ -147,6 +147,16 @@ const funStats = [
           tooltip: {
             mode: "index",
             itemSort: sortTooltips,
+            callbacks: {
+              footer(tooltipItems) {
+                // Show total issues count in the tooltip
+                const total = tooltipItems.reduce(
+                  (acc, item) => acc + item.parsed.y,
+                  0,
+                );
+                return `Total: ${total}`;
+              },
+            },
           },
         },
         interaction: {
