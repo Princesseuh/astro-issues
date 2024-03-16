@@ -7,7 +7,7 @@ export function getStatsForRepo(repo: string) {
   });
 }
 
-export function getAverageIssueCountForRepo(repo: string, lastDays = 14) {
+export function getAverageIssueCountForRepo(repo: string, lastDays = 5) {
   const data = getStatsForRepo(repo).slice(-lastDays);
   const sum = data.reduce((a, b) => a + b, 0);
   const avg = sum / data.length || 0;
