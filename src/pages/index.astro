@@ -1,4 +1,5 @@
 ---
+import LabelStats from "../components/LabelStats.astro";
 import Layout from "../layouts/Layout.astro";
 import { getAverageIssueCountForRepo, getStatsForRepo } from "../scripts/data";
 import { allRepos, statsFromLast30Days } from "issues:stats";
@@ -79,16 +80,13 @@ const funStats = [
     >
   </h2>
   <section class="flex flex-col sm:flex-row gap-8">
-    <div class="flex-1">
+     <div class="flex-grow">
+      <LabelStats />
+    </div>
+    <div class="flex-1 flex flex-col">
       <h2 class="heading-4 text-white my-6">Issues per repo</h2>
       <div class="bg-white rounded-lg p-4">
         <canvas id="issues-repos-pie-chart"></canvas>
-      </div>
-    </div>
-    <div class="flex-grow">
-      <h2 class="heading-4 text-white my-6">Issues per label</h2>
-      <div class="bg-white rounded-lg p-4">
-        <h3 class="text-3xl text-center text-black">WIP</h3>
       </div>
     </div>
   </section>
