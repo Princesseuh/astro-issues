@@ -25,7 +25,7 @@ export default function vitePluginStats(): Plugin {
     },
     async load(id) {
       if (id === resolvedVirtualModuleId) {
-        const allStats = import.meta.glob("/src/data/*.json");
+        const allStats = import.meta.glob("/src/data/*.json", { eager: true });
 
         const statsFromLast30Days: StatObject = Object.fromEntries(
           await Promise.all(
@@ -41,7 +41,7 @@ export default function vitePluginStats(): Plugin {
               .map(async ([key, value]) => {
                 return [
                   key.replace("/src/data/", "").replace(".json", ""),
-                  (await (value as () => Promise<any>)()).default,
+                  (value as any).default,
                 ];
               }),
           ),
