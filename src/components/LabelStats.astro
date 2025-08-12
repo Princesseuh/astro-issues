@@ -48,11 +48,16 @@ function getLabelURL(repo: string, label: string) {
 <div class="bg-white rounded-lg p-4 flex flex-col gap-6">
 	{
 		topReposLabelData.map(async ({ repo, labels }) => {
+			// Display labels with 4 or more ocurrences or the top 10 labels, whichever is more.
+			let labelsToDisplay = labels.filter(({ count }) => count > 3);
+			if (labelsToDisplay.length < 10) {
+				labelsToDisplay = labels.slice(0, 10);
+			}
 			return (
 				<div class="flex flex-col gap-2">
 					<h3 class="text-gray-900 font-bold text-2xl">{repo}</h3>
 					<ul class="flex gap-2 flex-wrap items-center text-gray-800">
-						{labels.slice(0, 10).map(({ label, count }) => {
+						{labelsToDisplay.map(({ label, count }) => {
 							return (
 								<li>
 									<a
