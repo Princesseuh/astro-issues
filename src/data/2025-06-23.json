@@ -1,0 +1,259 @@
+{
+  "date": "2025-06-23T01:28:40.295Z",
+  "data": {
+    "astro": {
+      "issuePerLabel": {
+        "needs triage": 70,
+        "- P3: minor bug": 59,
+        "pkg: vercel": 2,
+        "- P4: important": 11,
+        "feat: csp": 1,
+        "- P2: has workaround": 27,
+        "feat: assets": 10,
+        "pkg: mdx": 4,
+        "regression": 2,
+        "feat: server islands": 4,
+        "needs discussion": 6,
+        "feat: env": 1,
+        "pkg: cloudflare": 16,
+        "feat: rendering": 7,
+        "pkg: node": 4,
+        "feat: integration api": 1,
+        "pkg: upgrade": 1,
+        "feat: error pages": 1,
+        "pkg: db": 11,
+        "ecosystem: upstream": 3,
+        "- P2: nice to have": 23,
+        "feat: i18n": 3,
+        "feat: styling": 8,
+        "pkg: astro": 5,
+        "feat: routing": 3,
+        "pkg: markdoc": 2,
+        "feat: prefetch": 2,
+        "feat: actions": 4,
+        "requires refactor": 8,
+        "feat: content layer": 6,
+        "feat: markdown": 1,
+        "feat: view transitions": 5,
+        "help wanted": 3,
+        "feat: hmr": 1,
+        "feat: typescript": 2,
+        "feat: dev": 2,
+        "pkg: react": 4,
+        "feat: content collections": 1,
+        "pkg: solid": 2,
+        "pkg: create-astro": 1,
+        "pkg: vue": 2,
+        "pkg: svelte": 2,
+        "feat: errors": 1,
+        "pkg: rss": 1
+      },
+      "issueCount": 195
+    },
+    "docs": {
+      "issuePerLabel": {
+        "improve or update documentation": 15,
+        "good first issue": 8,
+        "help wanted": 16,
+        "code snippet update": 1,
+        "bug": 1,
+        "should this be documented?": 2,
+        "help - confirm behaviour": 2,
+        "add new content": 4,
+        "site improvement": 1,
+        "recipe": 1
+      },
+      "issueCount": 24
+    },
+    "prettier-plugin-astro": {
+      "issuePerLabel": {
+        "needs triage": 2,
+        "needs response": 1,
+        "feature": 1,
+        "- P4: important": 4,
+        "feat: expression": 3,
+        "- P3: minor bug": 3,
+        "ecosystem: compiler": 2,
+        "- P2: nice to have": 1
+      },
+      "issueCount": 29
+    },
+    "compiler": {
+      "issuePerLabel": {
+        "needs triage": 14,
+        "- P3: minor bug": 24,
+        "feat: ast": 2,
+        "- P2: has workaround": 9,
+        "- P4: important": 12,
+        "feat: tsx": 7,
+        "needs response": 1,
+        "- P5: urgent": 2,
+        "- P2-to-be-discussed": 2,
+        "- P2: nice to have": 5,
+        "downstream-blocker": 1,
+        "help wanted": 3,
+        "- P1: chore": 1
+      },
+      "issueCount": 72
+    },
+    "astro-repl": {
+      "issuePerLabel": {},
+      "issueCount": 4
+    },
+    "language-tools": {
+      "issuePerLabel": {
+        "needs triage": 19,
+        "feat: syntax": 7,
+        "- P2: nice to have": 5,
+        "needs investigation": 3,
+        "ecosystem: upstream": 7,
+        "- P3: minor bug": 16,
+        "feat: check": 3,
+        "feat: debug": 1,
+        "needs response": 1,
+        "- P2: has workaround": 6,
+        "ecosystem: compiler": 5,
+        "needs repro": 1,
+        "good first issue": 4,
+        "feat: vue": 4,
+        "pkg: ts-plugin": 1,
+        "feat: svelte": 4,
+        "feat: yarn-pnp": 2,
+        "- P4: important": 3,
+        "feat: pnpm": 1
+      },
+      "issueCount": 55
+    },
+    "astro.new": {
+      "issuePerLabel": {
+        "good first issue": 1
+      },
+      "issueCount": 1
+    },
+    "roadmap": {
+      "issuePerLabel": {},
+      "issueCount": 2
+    },
+    "withastro.github.io": {
+      "issuePerLabel": {},
+      "issueCount": 1
+    },
+    "astro.build": {
+      "issuePerLabel": {},
+      "issueCount": 6
+    },
+    "astro-playground": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    ".github": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "action": {
+      "issuePerLabel": {
+        "good first issue": 1,
+        "enhancement": 2
+      },
+      "issueCount": 10
+    },
+    "github-pages": {
+      "issuePerLabel": {},
+      "issueCount": 1
+    },
+    "cli-kit": {
+      "issuePerLabel": {},
+      "issueCount": 4
+    },
+    "site-kit": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "blog-tutorial-demo": {
+      "issuePerLabel": {},
+      "issueCount": 1
+    },
+    "houston-vscode": {
+      "issuePerLabel": {
+        "bug": 2
+      },
+      "issueCount": 5
+    },
+    "houston-discord": {
+      "issuePerLabel": {
+        "feature": 2,
+        "RFC": 5,
+        "improvement": 1
+      },
+      "issueCount": 9
+    },
+    "starlight": {
+      "issuePerLabel": {
+        "🐛 bug": 3,
+        "has-workaround": 1,
+        "🤩 a11y": 1
+      },
+      "issueCount": 21
+    },
+    "automation": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "view-transitions-demo": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "wormhole": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "contribute.docs.astro.build": {
+      "issuePerLabel": {},
+      "issueCount": 2
+    },
+    "studio-templates": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "action-studio": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "astro-ecosystem-ci": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "templates": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "skew-protection-test": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "support-docs": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "server-islands": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "server-islands-api": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "starlight-gh-pages-test": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    },
+    "storefront": {
+      "issuePerLabel": {},
+      "issueCount": 2
+    },
+    "preview.astro.new": {
+      "issuePerLabel": {},
+      "issueCount": 0
+    }
+  }
+}
