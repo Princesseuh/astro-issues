@@ -1,0 +1,74 @@
+---
+import { allRepos, statsFromLast30Days } from 'issues:stats';
+import { getAverageIssueCountForRepo } from '../scripts/data';
+
+function getLabelStatsForRepo(repo: string) {
+	const issuePerLabel =
+		Object.values(statsFromLast30Days).at(-1)?.data?.[repo]?.issuePerLabel || {};
+	return Object.entries(issuePerLabel)
+		.sort(([, a], [, b]) => b - a)
+		.map(([label, count]) => ({ label, count }));
+}
+
+const topReposLabelData = allRepos
+	.filter((repo) => getAverageIssueCountForRepo(repo) >= 7)
+	.map((repo) => ({
+		repo,
+		labels: getLabelStatsForRepo(repo),
+	}));
+
+const maxLabelIssueCount = Math.max(
+	...topReposLabelData.flatMap(({ labels }) => labels.flatMap(({ count }) => count))
+);
+
+/** Get font size based on a label’s frequency. */
+function getLabelSize(count: number) {
+	const sizes = ['text-xs', 'text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl', 'text-2xl'];
+	return sizes[Math.floor((count / (maxLabelIssueCount + 1)) * sizes.length)];
+}
+
+/** Get background colour for a label. Used to highlight some key ones. */
+function getLabelColor(label: string) {
+	if (label.includes('good first issue')) return 'bg-[#36fb85] text-black';
+	if (label.includes('needs triage')) return 'bg-[#fef2c0] text-black';
+	return 'bg-astro-gray-100';
+}
+
+/** Get a link to open issues with this label. */
+function getLabelURL(repo: string, label: string) {
+	const url = new URL(`https://github.com/withastro/${repo}/issues`);
+	url.searchParams.set('q', `is:issue is:open label:${JSON.stringify(label)}`);
+	return url;
+}
+---
+
+<h2 class="heading-4 text-white my-6">Issues per label</h2>
+<div class="bg-white rounded-lg p-4 flex flex-col gap-6">
+	{
+		topReposLabelData.map(async ({ repo, labels }) => {
+			return (
+				<div class="flex flex-col gap-2">
+					<h3 class="text-gray-900 font-bold text-2xl">{repo}</h3>
+					<ul class="flex gap-2 flex-wrap items-center text-gray-800">
+						{labels.slice(0, 10).map(({ label, count }) => {
+							return (
+								<li>
+									<a
+										href={getLabelURL(repo, label)}
+										class:list={[
+											getLabelSize(count),
+											getLabelColor(label),
+											'leading-relaxed px-[0.75em] py-[0.25em] rounded-full',
+										]}
+									>
+										{label} <span class="font-bold">{count}</span>
+									</a>
+								</li>
+							);
+						})}
+					</ul>
+				</div>
+			);
+		})
+	}
+</div>
