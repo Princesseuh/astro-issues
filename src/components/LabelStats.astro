@@ -31,6 +31,8 @@ function getLabelSize(count: number) {
 function getLabelColor(label: string) {
 	if (label.includes('good first issue')) return 'bg-[#36fb85] text-black';
 	if (label.includes('needs triage')) return 'bg-[#fef2c0] text-black';
+	if (label.includes('P5:')) return 'bg-[#f25c33] text-black';
+	if (label.includes('P4:')) return 'bg-[#f77d4c] text-black';
 	return 'bg-astro-gray-100';
 }
 
