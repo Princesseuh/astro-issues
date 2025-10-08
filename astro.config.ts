@@ -5,12 +5,7 @@ import vitePluginStats from "./scripts/vite-plugin-stats.js";
 
 // https://astro.build/config
 export default defineConfig({
-  site:
-    process.env.VERCEL_ENV === "production"
-      ? "https://astro.badg.es/"
-      : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/`
-      : "https://localhost:4321/",
+  site: process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL || 'https://issues.astro.build/',
   integrations: [tailwind({ applyBaseStyles: false })],
   vite: {
     plugins: [vitePluginStats()],
